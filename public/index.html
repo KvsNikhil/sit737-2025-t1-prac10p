@@ -1,33 +1,78 @@
-<!-- Kotapti Venkat Sai Nikhil -->
- <!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
+    <title>Nikhil's Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        input, select, button {
+            font-size: 1.2rem;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>SIT_737 - Cloud Native Application Development</h1>
-    <h2>Task 2.1p - s224603449</h2>
-    <h2>Nikhil's Calculator</h2>
-
-    <input type="number" id="num1" placeholder="Enter First Number">
-    <br><br>
-    <input type="number" id="num2" placeholder="Enter Second Number">
-    <br><br>
-
-    <select id="operation">
-        <option value="add">+</option>
-        <option value="subtract">-</option>
-        <option value="multiply">*</option>
-        <option value="divide">/</option>
-    </select>
-    <br><br>
-
-    <button onclick="calculate()">Calculate</button>
-    <br><br>
-    <span id="result"></span>
+    <div class="container">
+        <h1>SIT_737 - Cloud Native Application Development</h1>
+        <h2>Task 4.1c - s224603449</h2>
+        <h2>Nikhil's Calculator</h2>
+        <input type="number" id="num1" placeholder="Enter First Number" />
+        <input type="number" id="num2" placeholder="Enter Second Number" />
+        <select id="operation">
+            <option value="add">+</option>
+            <option value="subtract">-</option>
+            <option value="multiply">*</option>
+            <option value="divide">/</option>
+            <option value="power">^ (Exponentiation)</option>
+            <option value="sqrt">√ (Square Root)</option>
+            <option value="modulo">% (Modulo)</option>
+        </select>
+        <button onclick="calculate()">Calculate</button>
+        <div class="error" id="error-message"></div>
+        <div class="result" id="result"></div>
+    </div>
 
     <script>
         function calculate() {
