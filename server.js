@@ -1,8 +1,6 @@
-//Kotapati Venkat Sai Nikhil
-//server.js
-
 const express = require('express');
 const winston = require('winston');
+const cors = require('cors');
 
 // Create a Winston logger
 const logger = winston.createLogger({
@@ -19,6 +17,9 @@ const logger = winston.createLogger({
 
 const app = express();
 const PORT = 3000;
+
+// Enable CORS
+app.use(cors());
 
 app.use(express.static('public'));
 
@@ -126,6 +127,82 @@ app.get('/divide', (req, res) => {
     }
 });
 
+// Exponentiation endpoint (Power)
+app.get('/power', (req, res) => {
+    try {
+        const { num1, num2 } = req.query;
+        const base = parseFloat(num1);
+        const exponent = parseFloat(num2);
+
+        if (isNaN(base) || isNaN(exponent)) {
+            throw new Error('Invalid numbers provided');
+        }
+
+        const result = Math.pow(base, exponent);
+        res.json({
+            base,
+            exponent,
+            operation: 'power',
+            result
+        });
+    } catch (error) {
+        logger.error(`Exponentiation error: ${error.message}`);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Square root endpoint
+app.get('/sqrt', (req, res) => {
+    try {
+        const { num1 } = req.query;
+        const number = parseFloat(num1);
+
+        if (isNaN(number)) {
+            throw new Error('Invalid number provided');
+        }
+
+        if (number < 0) {
+            throw new Error('Cannot calculate the square root of a negative number');
+        }
+
+        const result = Math.sqrt(number);
+        res.json({
+            number,
+            operation: 'square root',
+            result
+        });
+    } catch (error) {
+        logger.error(`Square root error: ${error.message}`);
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Modulo operation endpoint
+app.get('/modulo', (req, res) => {
+    try {
+        const { num1, num2 } = req.query;
+        const dividend = parseFloat(num1);
+        const divisor = parseFloat(num2);
+
+        if (isNaN(dividend) || isNaN(divisor)) {
+            throw new Error('Invalid numbers provided');
+        }
+        if (divisor === 0) {
+            throw new Error('Cannot divide by zero');
+        }
+        const result = dividend % divisor;
+        res.json({
+            dividend,
+            divisor,
+            operation: 'modulo',
+            result
+        });
+    } catch (error) {
+        logger.error(`Modulo error: ${error.message}`);
+        res.status(400).json({ error: error.message });
+    }
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
     logger.error(`Unhandled error: ${err.message}`);
@@ -133,5 +210,6 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
+    logger.info(`Server is running on http://localhost:${PORT}`);
     console.log(`Server is running on http://localhost:${PORT}`);
 });
