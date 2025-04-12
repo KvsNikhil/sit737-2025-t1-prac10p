@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   webapp:
-    image: kvsnikhil/web_app:1.0
+    image: kvsnikhil/web_app:2.0
     build: .
     ports:
       - "3001:3000"  

@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Resolve and install required packages
-RUN npm ci
+RUN npm install
 
 # Transfer application source code
 COPY . ./
@@ -17,4 +17,4 @@ COPY . ./
 EXPOSE 3000
 
 # Specify application launch command
-CMD ["node", "index.js"]
+CMD ["node", "server.js"]

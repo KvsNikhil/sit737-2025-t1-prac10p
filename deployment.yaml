@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      containers:
+      - name: web-app-container
+        image: kvsnikhil/web_app:2.0
+        imagePullPolicy: Never   # Tells Kubernetes to use your local image
+        ports:
+        - containerPort: 3000    
