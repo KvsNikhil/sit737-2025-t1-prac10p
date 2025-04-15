@@ -21,7 +21,7 @@ const PORT = 3000;
 // Enable CORS
 app.use(cors());
 
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 // Middleware to log request details
 app.use((req, res, next) => {
@@ -40,7 +40,8 @@ app.use((req, res, next) => {
 // Route to serve the frontend
 app.get('/', (req, res) => {
     try {
-        res.sendFile(__dirname + '/public/index.html');
+        //res.sendFile(__dirname + '/public/index.html');
+        res.send('Updated Kubernetes Calculator Application');
     } catch (error) {
         logger.error(`Error serving index.html: ${error.message}`);
         res.status(500).json({ error: 'Internal Server Error' });
