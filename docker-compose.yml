@@ -1,14 +1,28 @@
-version: '3.8'
-
+version: '3'
 services:
-  webapp:
-    image: kvsnikhil/web_app:2.0
-    build: .
+  mongodb:
+    image: mongo:6.0
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoUser
+      MONGO_INITDB_ROOT_PASSWORD: mongoPassword
     ports:
-      - "3001:3000"  
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
-      interval: 30s
-      retries: 3
-      start_period: 30s
-      timeout: 10s
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+
+  node-app:
+    image: kvsnikhil/web_app:v3.2
+    depends_on:
+      - mongodb
+    environment:
+      DB_HOST: mongodb
+      DB_PORT: 27017
+      DB_USER: mongoUser
+      DB_PASS: mongoPassword
+    ports:
+      - 3000:3000
+
+volumes:
+  mongo-data:

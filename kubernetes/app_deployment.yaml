@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculator-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calculator
+  template:
+    metadata:
+      labels:
+        app: calculator
+    spec:
+      containers:
+        - name: calculator-container
+          image: kvsnikhil/web_app:v3.2
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-creds
+                  key: connectionString  # Ensure the key matches your secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calculator-service
+spec:
+  selector:
+    app: calculator
+  ports:
+    - protocol: TCP
+      port: 30323
+      targetPort: 3000
+  type: NodePort
